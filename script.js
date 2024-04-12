@@ -6,7 +6,7 @@ class Calculator{
     }
 
     clear(){
-        this.currentOperand='0.0';
+        this.currentOperand='';
         this.previousOperand = '';
         this.operation = '';
 
@@ -82,7 +82,7 @@ class Calculator{
             this.currentOperandandTextElement.innerText = this.getDisplayNumber(this.currentOperand);
         }
         else{
-            this.currentOperandandTextElement = '0.0' ;
+            this.currentOperandandTextElement = '0' ;
         }
         if(this.operation !== null){
 
