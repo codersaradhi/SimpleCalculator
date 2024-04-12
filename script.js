@@ -154,8 +154,14 @@ deleteButton.addEventListener('click',handleDelete);
 deleteButton.addEventListener('keypress',handleDelete);
 
 
+// function handleDelete(event){
+//     if(event.type === 'click' || (event.type === 'keypress' && event.key === 'Delete')){
+//         calculator.delete();
+//         calculator.updatetoDisplay();
+//     }
+// }
 function handleDelete(event){
-    if(event.type === 'click' || (event.type === 'keypress' && event.key === 'Delete')){
+    if(event.type === 'click' || (event.type === 'keypress' && (event.keycode === 46 || event.which === 8) )){
         calculator.delete();
         calculator.updatetoDisplay();
     }
