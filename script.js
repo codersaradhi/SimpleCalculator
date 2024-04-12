@@ -1,28 +1,28 @@
-class Calculator{
-    constructor(previousOperandandTextElement,currentOperandandTextElement){
+class Calculator {
+    constructor(previousOperandandTextElement, currentOperandandTextElement) {
         this.previousOperandandTextElement = previousOperandandTextElement;
         this.currentOperandandTextElement = currentOperandandTextElement;
         this.clear();
     }
 
-    clear(){
-        this.currentOperand='';
+    clear() {
+        this.currentOperand = '';
         this.previousOperand = '';
         this.operation = '';
 
 
     }
-    delete(){
+    delete() {
         this.currentOperand = this.currentOperand.toString().slice(0, -1);
         // this.currentOperand = this.currentOperand.toString().slice(1, -1);
     }
-    appendNumber(number){
-        if(number === '.' && this.currentOperand.includes('.')) return
+    appendNumber(number) {
+        if (number === '.' && this.currentOperand.includes('.')) return
         this.currentOperand = this.currentOperand.toString() + number.toString();
     }
-    chooseOperation(operation){
-        if(this.currentOperand === '') return;
-        if(this.previousOperand !== ''){
+    chooseOperation(operation) {
+        if (this.currentOperand === '') return;
+        if (this.previousOperand !== '') {
             this.coumpute();
         }
         this.operation = operation;
@@ -30,12 +30,12 @@ class Calculator{
         this.currentOperand = ''
 
     }
-    coumpute(){
+    coumpute() {
         let computation
         const prev = parseFloat(this.previousOperand);
         const curr = parseFloat(this.currentOperand);
-        if(isNaN(prev) || isNaN(curr))  return;
-        switch(this.operation){
+        if (isNaN(prev) || isNaN(curr)) return;
+        switch (this.operation) {
             case '+':
                 computation = prev + curr;
                 break;
@@ -56,40 +56,40 @@ class Calculator{
         this.previousOperand = '';
     }
     /////corner case//////////
-    getDisplayNumber(number){
+    getDisplayNumber(number) {
         const stringNumber = number.toString();
         const integerDigits = parseFloat(stringNumber.split('.')[0]);
         const decimalDigits = stringNumber.split('.')[1];
         let integerDisplay
-        if(isNaN(integerDigits)){
+        if (isNaN(integerDigits)) {
             integerDisplay = ''
-        }else{
-            integerDisplay = integerDigits.toLocaleString('en',{
-                maximumFractionDigits:0
+        } else {
+            integerDisplay = integerDigits.toLocaleString('en', {
+                maximumFractionDigits: 0
             });//for comma's
         }
-        if(decimalDigits != null){
+        if (decimalDigits != null) {
             return `${integerDisplay}.${decimalDigits}`;
-        }else{
+        } else {
             return integerDisplay;
         }
 
     }
     ///////////////////////////
-    updatetoDisplay(){
-        if(this.currentOperand !== null){
-            
+    updatetoDisplay() {
+        if (this.currentOperand !== null) {
+
             this.currentOperandandTextElement.innerText = this.getDisplayNumber(this.currentOperand);
         }
-        else{
-            this.currentOperandandTextElement = '0' ;
+        else {
+            this.currentOperandandTextElement = '0';
         }
-        if(this.operation !== null){
+        if (this.operation !== null) {
 
             this.previousOperandandTextElement.innerText = `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`
         }
-        else{
-            this.previousOperandandTextElement ='';
+        else {
+            this.previousOperandandTextElement = '';
         }
 
     }
@@ -105,43 +105,73 @@ const deleteButton = document.querySelector('[data-delete]');
 const previousOperandandTextElement = document.querySelector('[data-previous-operand]');
 const currentOperandandTextElement = document.querySelector('[data-current-operand]');
 
-const calculator = new Calculator(previousOperandandTextElement,currentOperandandTextElement);
+const calculator = new Calculator(previousOperandandTextElement, currentOperandandTextElement);
 
-numberButtons.forEach(button =>{
-    button.addEventListener('click',() =>{
+numberButtons.forEach(button => {
+    button.addEventListener('click', () => {
         calculator.appendNumber(button.innerText);
         calculator.updatetoDisplay();
     })
 })
 
+// Attach event listener for keyboard events outside the loop
+document.addEventListener('keydown', event => {
+    // Iterate over each number button
+    numberButtons.forEach(button => {
+        // Check if the key pressed matches the button's text content
+        if (event.key === button.innerText) {
+            // Call appropriate methods on calculator object
+            calculator.appendNumber(button.innerText);
+            calculator.updatetoDisplay();
+        }
+    });
+});
 
-operationButtons.forEach(button =>{
-    button.addEventListener('click',() =>{
+
+operationButtons.forEach(button => {
+    button.addEventListener('click', () => {
         calculator.chooseOperation(button.innerText);
         calculator.updatetoDisplay();
     })
 })
-
-equalsButton.addEventListener('click',button =>{
+// Attach event listener for keyboard events outside the loop
+document.addEventListener('keydown', event => {
+    // Iterate over each operation button
+    operationButtons.forEach(button => {
+        // Check if the key pressed matches the button's text content
+        if (event.key === button.innerText) {
+            // Call appropriate methods on calculator object
+            calculator.chooseOperation(button.innerText);
+            calculator.updatetoDisplay();
+        }
+    });
+});
+equalsButton.addEventListener('click', button => {
     calculator.coumpute();
     calculator.updatetoDisplay();
 })
+document.addEventListener('keydown', event => {
+    if (event.key === 'Enter') {
+        calculator.coumpute();
+        calculator.updatetoDisplay();
+    }
+})
 
 
-allClearButton.addEventListener('click',button =>{
+allClearButton.addEventListener('click', button => {
     calculator.clear();
     calculator.updatetoDisplay();
 })
 
 
-document.addEventListener('keydown',event =>{
-    if(event.key === 'Delete' ){
+document.addEventListener('keydown', event => {
+    if (event.key === 'Delete') {
         calculator.clear();
         calculator.updatetoDisplay();
     }
 })
 
-deleteButton.addEventListener('click',button=>{
+deleteButton.addEventListener('click', button => {
     calculator.delete();
     calculator.updatetoDisplay();
 })
