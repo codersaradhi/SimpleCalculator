@@ -126,11 +126,49 @@ equalsButton.addEventListener('click',button =>{
     calculator.coumpute();
     calculator.updatetoDisplay();
 })
-allClearButton.addEventListener('click',button =>{
-    calculator.clear();
-    calculator.updatetoDisplay();
-})
-deleteButton.addEventListener('click',button=>{
-    calculator.delete();
-    calculator.updatetoDisplay();
-})
+// allClearButton.addEventListener('click',button =>{
+//     calculator.clear();
+//     calculator.updatetoDisplay();
+// })
+
+
+// allClearButton.addEventListener('keydown',event =>{
+//     if(event.key === 'Escape' ){
+//         calculator.clear();
+//         calculator.updatetoDisplay();
+//     }
+// })
+allClearButton.addEventListener('click',handleClear);
+allClearButton.addEventListener('keypress',handleClear);
+
+function handleClear(event){
+    if(event.type === 'click' || (event.type === 'keypress' && event.key === 'Escape')){
+        calculator.clear();
+        calculator.updatetoDisplay();
+    }
+}
+
+
+
+deleteButton.addEventListener('click',handleDelete);
+deleteButton.addEventListener('keypress',handleDelete);
+
+
+function handleDelete(event){
+    if(event.type === 'click' || (event.type === 'keypress' && event.key === 'Delete')){
+        calculator.delete();
+        calculator.updatetoDisplay();
+    }
+}
+
+// deleteButton.addEventListener('click',button=>{
+//     calculator.delete();
+//     calculator.updatetoDisplay();
+// })
+// deleteButton.addEventListener('keydown', button => {
+//     // Check if the key pressed is the delete key
+//     if (button.key === 'Delete') {
+//       calculator.delete();
+//       calculator.updatetoDisplay();
+//     }
+//   });
