@@ -10,9 +10,9 @@ Division
 
 Getting Started:
 
-Clone this repository to your local machine using git clone https://github.com/your-username/simple-calculator.git
-Navigate to the project directory: cd simple-calculator
-Run the calculator script: python calculator.py
+Clone this repository to your local machine using git clone  https://codersaradhi.github.io/SimpleCalculator/
+Navigate to the project directory: cd simplecalculator
+Run the calculator script: calculator.js
 
 Usage:
 
@@ -26,7 +26,7 @@ The result of the operation will be displayed.
 
 Example:
 
-mathematica
+mathematicas
 Copy code
 Enter the first number: 10
 Enter the operation (+, -, *, /): +
